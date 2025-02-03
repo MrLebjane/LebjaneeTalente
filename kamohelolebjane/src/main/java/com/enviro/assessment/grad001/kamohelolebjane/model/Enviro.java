@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Enviro {
@@ -15,9 +16,11 @@ public class Enviro {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
+    @NotNull(message = "Category name cannot be null")
 	private String wasteCategory;
+    @NotNull(message = "Disposal Guidlines name cannot be null")
     private String DisposalGuidlines;
+    @NotNull(message = "Recycling Tips name cannot be null")
     private String RecyclingTips;
 
     

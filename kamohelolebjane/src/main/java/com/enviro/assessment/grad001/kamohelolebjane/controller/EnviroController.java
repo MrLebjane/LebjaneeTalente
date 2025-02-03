@@ -16,6 +16,10 @@ import com.enviro.assessment.grad001.kamohelolebjane.model.CategorizationLookup;
 import com.enviro.assessment.grad001.kamohelolebjane.model.Enviro;
 import com.enviro.assessment.grad001.kamohelolebjane.service.EnviroService;
 
+import jakarta.validation.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 @RestController
 @Validated
 public class EnviroController {
@@ -40,21 +44,30 @@ public class EnviroController {
    }
    //Updates  recycle tips
    @PutMapping("/updatetip/{id}")
-   public int assignTechnician(@PathVariable Long id, @RequestBody Map<String,String> RecycTip) {
+   public int updateRecyTipByID(@PathVariable Long id, @RequestBody @Valid Map<String, @NotNull @Size(min = 1) String> RecycTip) {
 	   String recycTip=RecycTip.get("recyclingTips");
 	   return enviroService.updateRecyTipByID(id, recycTip);
    }
-   //Gets all the data
+   /*
+    * Gets all the data
+    * The data is in the following structure.
+    * For each category there is disposal guidlines and recycle tips.
+    */
    @GetMapping("/allinfo")
    public List<Enviro> allinfo(){
 	   return enviroService.allinfo();
    }
    
+   /*Retrieves all different categories(this endpoint also returns category identification 
+    * (additional information) about each category to help identify which Item falls under which categroy).
+    */
    @GetMapping("/categorizationlookupinfo")
    public List<String> allCategorizationLookupinfo(){
 	   return enviroService.allCategorizationLookupinfo();
    }
-   //Deletes a certain waste Item information for a certain category by ID
+   /*Deletes identification information of a category(This is just additional information to help 
+    * identify which item belongs to which category
+   */
    @DeleteMapping("/deleteitemidentificationinfo/{id}")
 	public int deleteItemIdentificationInfoById(@PathVariable long id){
 		return enviroService.deleteItemIdentificationInfoById(id);

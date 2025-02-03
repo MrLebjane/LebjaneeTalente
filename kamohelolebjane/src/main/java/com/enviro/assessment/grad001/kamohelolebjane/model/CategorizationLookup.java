@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.Constraint.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class CategorizationLookup {
@@ -21,6 +23,7 @@ public class CategorizationLookup {
 	 *waste items information and reference them under 1 waste category 
 	 */
 	@ManyToOne
+	@NotNull(message = "Category name cannot be null")
 	private Enviro category;
 	// ItemIdentification Stores information of a type of waste item that falls under this category
 	private String ItemIdentification;
